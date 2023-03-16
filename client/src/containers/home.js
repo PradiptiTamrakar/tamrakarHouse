@@ -1,7 +1,11 @@
+import NavBar from '../components/header/navBar'
+
 const Home =()=> {
+    
 return(
     <div className="App">
-        This is our Home
+        <NavBar/>
+        
     </div>
 )
 }
