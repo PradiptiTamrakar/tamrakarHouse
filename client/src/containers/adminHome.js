@@ -1,7 +1,10 @@
+import NavBar from "../components/header/navBar"
+
 const AdminHome =()=> {
     return(
         <div className="App">
-            This is Admin Home
+        <NavBar/>
+        Want to become a seller?
         </div>
     )
     }

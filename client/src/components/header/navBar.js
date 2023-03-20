@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,10 +13,11 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { assignUserRole } from '../../redux/reducers/userSlice';
+import { useSelector,useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -101,6 +103,7 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
 
@@ -122,24 +125,12 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton size="large" aria-label="show 4 new Shopping List" color="inherit">
           <Badge badgeContent={4} color="error">
-            <MailIcon />
+            <AddShoppingCartIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <p>Shopping List</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -155,10 +146,40 @@ export default function PrimarySearchAppBar() {
       </MenuItem>
     </Menu>
   );
+ 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userRole } = useSelector((state) => state.user);
+
+  const adminPageNavigator =()=>{
+    dispatch(assignUserRole("admin"))
+    navigate("/")
+  }
+  const buyerPageNavigator =()=>{
+    dispatch(assignUserRole("user"))
+    navigate("/")
+  }
+
+  const SwitchRole =()=>{
+    if(userRole==="user"){
+    return (
+      <Button variant="contained" color="grey" 
+  onClick={()=> adminPageNavigator()}>
+  Sell
+  </Button>
+  )
+ }
+  return (
+  <Button variant="contained" color="grey" 
+  onClick={()=> buyerPageNavigator()}>
+  Switch to User
+  </Button>)
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+     
+      <AppBar position="static" style={{ backgroundColor:"#bd3a23"}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -175,7 +196,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            TAMRAKAR HOUSE
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -186,10 +207,15 @@ export default function PrimarySearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          
           <Box sx={{ flexGrow: 1 }} />
+          
+          <SwitchRole/>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton color="inherit" aria-label="add to shopping cart">
+          <Badge badgeContent={4} color="error">
           <AddShoppingCartIcon />
+          </Badge>
           </IconButton>
             <IconButton
               size="large"
