@@ -1,10 +1,9 @@
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { TextField, Grid } from '@mui/material'
+import { Button, TextField, Grid } from '@mui/material'
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat'
 import { useNavigate } from 'react-router-dom'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-
 
 const RegisterSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -18,9 +17,9 @@ const RegisterSchema = Yup.object().shape({
     .max(10, 'Invalid Phone Number')
     .required('Required'),
   city: Yup.string()
-    .required('City is Required'),
+    .required('Vehicle Type is Required'),
   address: Yup.string()
-    .min(5, 'Invalid address')
+    .min(5, 'Invalid Vehicle Number')
     .required('Required'),
   password: Yup.string()
     .required('Please enter your password')
@@ -31,7 +30,7 @@ const RegisterSchema = Yup.object().shape({
 })
 
 
-const Register = () => {
+const AdminRegister = () => {
   // create a form here which should have following fields
   // 1. email(optional) 2. phone number 3. full name 4.vehicle type 5. vehicle number 
   // 2. password, confirm password, address 
@@ -41,8 +40,8 @@ const Register = () => {
       fullName: '',
       registerEmail: '',
       phoneNumber: '',
-      city: '',
-      address: '',
+      vehicleType: 'Bike',
+      vehicleNumber: '',
       password: '',
       confirmPassword: ''
     },
@@ -52,14 +51,15 @@ const Register = () => {
     }
   })
 
-const navigate= useNavigate()
+  const navigate= useNavigate()
+
   return (
-    <div>
-      <button className="btn" onClick={() => navigate(-1)}>
+      <div className="landing_pg">
+        <button className="btn" onClick={() => navigate(-1)}>
               <KeyboardBackspaceIcon /> <span>Back</span>
             </button>
       <form onSubmit={formik.handleSubmit}>
-        <center><h1> Register Form </h1></center>
+        <center><h1 className='h1'> Seller Registration Form </h1></center>
         <Grid
           container
           alignContent={'center'}
@@ -157,7 +157,7 @@ const navigate= useNavigate()
             />
           </Grid>
           <Grid item lg>
-          <button className="btn" type="submit"><span>Submit</span> <TrendingFlatIcon /></button>
+            <Button className="btn" type="submit"> <span>Submit</span> <TrendingFlatIcon /></Button>
           </Grid>
         </Grid >
       </form>
@@ -166,4 +166,4 @@ const navigate= useNavigate()
   );
 }
 
-export default Register;
+export default AdminRegister;

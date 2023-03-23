@@ -5,6 +5,7 @@ import Login from "../containers/auth/login"
 import Register from "../containers/auth/register"
 import AdminHome from "../containers/adminHome"
 import AdminLogin from "../containers/auth/adminLogin"
+import AdminRegister from "../containers/auth/adminRegister"
 
 import { useSelector } from "react-redux";
 
@@ -43,7 +44,7 @@ const AdminRoutes = () => {
     <Routes>
       <Route path="/" element={<AdminHome />} />
       <Route path="/login" element={<AdminLogin/>} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/register" element={<AdminRegister />} />
     </Routes>
   );
 };
